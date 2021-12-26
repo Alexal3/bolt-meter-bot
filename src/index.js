@@ -251,7 +251,7 @@ bot.onText(/\/help/, msg => {
 
 // Когда бота добавляют в группу
 bot.on('new_chat_members', async msg => {
-  if (msg.new_chat_participant.id === keys.BOT_ID) {
+  if (msg.new_chat_participant.id == keys.BOT_ID) {
     await User.updateMany({chatId: msg.chat.id}, {inTheSameChatWithTheBot: true})
 
     const text =  '<b>Привет)</b> 🙋‍♂️ Я бот, который меряет болты.🔩\n\n' +
@@ -268,7 +268,7 @@ bot.on('new_chat_members', async msg => {
 
 // Когда бота удаляют из группы
 bot.on('left_chat_member', async msg => {
-  if (msg.left_chat_participant.id === keys.BOT_ID) {
+  if (msg.left_chat_participant.id == keys.BOT_ID) {
     await User.updateMany({chatId: msg.chat.id}, {inTheSameChatWithTheBot: false})
   }
 })
