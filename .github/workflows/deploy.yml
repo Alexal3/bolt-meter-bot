@@ -22,6 +22,6 @@ jobs:
       - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
       # Deploy
-      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no ${{ secrets.user }}@${{ secrets.ip }} 'export PATH="/home/user1/.nvm/versions/node/v16.13.1/bin:$PATH"; pm2 delete index || :; cd ~/bot/; rm -rf 5/*; mv 4/* 5/ 2>/dev/null; mv 3/* 4/ 2>/dev/null; mv 2/* 3/ 2>/dev/null; mv 1/* 2/ 2>/dev/null'
+      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no ${{ secrets.user }}@${{ secrets.ip }} 'export PATH="/home/${{ secrets.user }}/.nvm/versions/node/v16.13.1/bin:$PATH"; pm2 delete index || :; cd ~/bot/; rm -rf 5/*; mv 4/* 5/ 2>/dev/null; mv 3/* 4/ 2>/dev/null; mv 2/* 3/ 2>/dev/null; mv 1/* 2/ 2>/dev/null'
       - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . ${{ secrets.user }}@${{ secrets.ip }}:~/bot/1/
-      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no ${{ secrets.user }}@${{ secrets.ip }} 'export PATH="/home/user1/.nvm/versions/node/v16.13.1/bin:$PATH"; cd ~/bot/1/; npm ci; pm2 start index.js'
+      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no ${{ secrets.user }}@${{ secrets.ip }} 'export PATH="/home/${{ secrets.user }}/.nvm/versions/node/v16.13.1/bin:$PATH"; cd ~/bot/1/; npm ci; pm2 start index.js'
