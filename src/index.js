@@ -4,7 +4,7 @@ const keys = require('./keys')
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas')
 const datalabels = require('chartjs-plugin-datalabels')
 
-console.log('Bot has been started ...')
+console.log('Bot has been started...')
 
 mongoose.connect(keys.DB_URL)
   .then(() => console.log('MongoDB connected'))
@@ -15,13 +15,13 @@ require('./models/user.model')
 const User = mongoose.model('user')
 
 // Создаем элемент canvas
-const chartJSNodeCanvas = new ChartJSNodeCanvas({ 
+const chartJSNodeCanvas = new ChartJSNodeCanvas({
   width: 700,
-  height: 500, 
+  height: 500,
   backgroundColour: 'white',
   chartCallback: (ChartJS) => {
     ChartJS.register(datalabels)
-  }    
+  }
 })
 
 // ========================================
@@ -96,7 +96,7 @@ bot.onText(/\/dick/, async msg => {
         newLength = user.length + changeInBoltLength;
       }
 
-      await User.updateOne({userId: msg.from.id, chatId: msg.chat.id}, {length: newLength, dateOfLastGame: new Date()}) 
+      await User.updateOne({userId: msg.from.id, chatId: msg.chat.id}, {length: newLength, dateOfLastGame: new Date()})
       user = await User.findOne({userId: msg.from.id, chatId: msg.chat.id})
 
       let change
@@ -106,18 +106,18 @@ bot.onText(/\/dick/, async msg => {
         change = 'уменьшился'
       }
 
-      text =  `🔩 Твой болт ${change} на <b>${Math.abs(newLength - oldLength)} см</b>.\n\n` + 
+      text =  `🔩 Твой болт ${change} на <b>${Math.abs(newLength - oldLength)} см</b>.\n\n` +
               `🧮 Теперь он равен <b>${user.length} см</b>.\n\n` +
               '📆 Следующая попытка <b>завтра</b>!'
 
     // Если да
     } else {
-      text =  `🎮 Ты уже <b>играл</b>.\n\n` + 
+      text =  `🎮 Ты уже <b>играл</b>.\n\n` +
               `🧮 Сейчас он равен <b>${user.length} см</b>.\n\n` +
               '📆 Следующая попытка <b>завтра</b>!'
     }
 
-    // Пишем сообщение 
+    // Пишем сообщение
     bot.sendMessage(msg.chat.id, text, {
       parse_mode: 'HTML'
     })
@@ -176,9 +176,9 @@ bot.onText(/\/stats/, async msg => {
             backgroundColor: [  'rgb(255, 99, 132)',
                                 'rgb(255, 159, 64)',
                                 'rgb(255, 205, 86)',
-                                'rgb(75, 192, 192)', 
-                                'rgb(54, 162, 235)', 
-                                'rgb(153, 102, 255)', 
+                                'rgb(75, 192, 192)',
+                                'rgb(54, 162, 235)',
+                                'rgb(153, 102, 255)',
                                 'rgb(201, 203, 207)'  ],
             cutout: 35,
             radius: 180,
