@@ -4,7 +4,7 @@ const keys = require('./keys')
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas')
 const datalabels = require('chartjs-plugin-datalabels')
 
-console.log('Bot has been started...')
+console.log('Bot has been started ...')
 
 mongoose.connect(keys.DB_URL)
   .then(() => console.log('MongoDB connected'))
