@@ -1,0 +1,21 @@
+{
+  "name": "boltmeterbot",
+  "version": "1.0.0",
+  "description": "Telegram bot that measures bolts",
+  "main": "./src/index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js"
+  },
+  "author": "Oleksii Bezrodnyi (https://alexal3.com/)",
+  "dependencies": {
+    "canvas": "^2.8.0",
+    "chart.js": "^3.6.0",
+    "chartjs-node-canvas": "^4.1.5",
+    "chartjs-plugin-datalabels": "^2.0.0",
+    "mongoose": "^6.0.13",
+    "node-telegram-bot-api": "^0.54.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,0 +1,21 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      recovery_point:
+        description: 'Recovery point. 1 - the newest, 5 - the oldest. If 1 is the current version and you use 1 to rollback, the server will just restart.'
+        required: true
+        default: '2'
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      # Setup key
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+      - run: chmod 600 "$HOME/.ssh/key"
+      # Deploy
+      - run: ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no ${{ secrets.user }}@${{ secrets.ip }} 'export PATH="/home/user1/.nvm/versions/node/v16.13.1/bin:$PATH"; pm2 delete index || :; pm2 start ~/bot/${{ github.event.inputs.recovery_point }}/index.js'
