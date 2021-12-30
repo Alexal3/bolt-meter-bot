@@ -54,7 +54,7 @@ bot.onText(/\/dick/, async msg => {
             [
               {
                 text: 'Добавить бота в группу',
-                url: 't.me/BoltMeterBot?startgroup=true'
+                url: `t.me/${(await bot.getMe()).username}?startgroup=true`
               }
             ]
           ]
@@ -138,7 +138,7 @@ bot.onText(/\/stats/, async msg => {
             [
               {
                 text: 'Добавить бота в группу',
-                url: 't.me/BoltMeterBot?startgroup=true'
+                url: `t.me/${(await bot.getMe()).username}?startgroup=true`
               }
             ]
           ]
