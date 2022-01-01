@@ -1,4 +1,4 @@
-![](docs/img/bolt.png)
+![](docs/img/bolt.jpg)
 
 # Bolt meter bot
 A Telegram bot that measures bolts.
