@@ -153,13 +153,13 @@ bot.onText(/\/stats/, async msg => {
 
     // Добавляем пользователям их имена
     for (let i = 0; i < users.length; i++) {
-      let chatMember = await bot.getChatMember(users[i].chatId, users[i].userId)
-
-      if (chatMember.user.last_name === undefined) {
-        users[i].title = `${users[i].length} см - ${chatMember.user.first_name}`;
-      } else {
-        users[i].title = `${users[i].length} см - ${chatMember.user.first_name} ${chatMember.user.last_name}`
-      }
+      bot.getChatMember(users[i].chatId, users[i].userId).then((chatMember) => {
+        if (chatMember.user.last_name === undefined) {
+          users[i].title = `${users[i].length} см - ${chatMember.user.first_name}`;
+        } else {
+          users[i].title = `${users[i].length} см - ${chatMember.user.first_name} ${chatMember.user.last_name}`
+        }
+      })
     }
 
     // Сортируем пользоватлей
