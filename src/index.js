@@ -184,9 +184,9 @@ bot.onText(/\/stats/, async msg => {
         console.log(e);
 
         if (users[i].last_name === undefined) {
-          users[i].title = users[i].first_name
+          users[i].title = `${users[i].length} см - ${users[i].first_name}`
         } else {
-          users[i].title = `${users[i].first_name} ${users[i].last_name}`
+          users[i].title = `${users[i].length} см - ${users[i].first_name} ${users[i].last_name}`
         }
       }
     }
