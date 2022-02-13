@@ -71,7 +71,11 @@ bot.onText(/\/dick/, async msg => {
 
     // Если нет - добавляем его туда
     if (user === null) {
-      await User.create({userId: msg.from.id, chatId: msg.chat.id, length: 0})
+      if (msg.from.last_name === undefined) {
+        await User.create({userId: msg.from.id, chatId: msg.chat.id, length: 0, first_name: msg.from.first_name})
+      } else {
+        await User.create({userId: msg.from.id, chatId: msg.chat.id, length: 0, first_name: msg.from.first_name, last_name: msg.from.last_name})
+      }
     }
 
     // Проверяем, играл ли пользователь сегодня
@@ -151,14 +155,39 @@ bot.onText(/\/stats/, async msg => {
     // Достаем всех пользователей-игроков чата
     let users = await User.find({chatId: msg.chat.id})
 
+    // Сохраняем имена и фамилии пользователей в БД на случай, если они изменились
+    for (let i = 0; i < users.length; i++) {
+      try {
+        let chatMember = await bot.getChatMember(users[i].chatId, users[i].userId)
+
+        if (chatMember.user.last_name === undefined) {
+          await User.updateOne({userId: users[i].userId, chatId: users[i].chatId}, {first_name: chatMember.user.first_name})
+        } else {
+          await User.updateOne({userId: users[i].userId, chatId: users[i].chatId}, {first_name: chatMember.user.first_name, last_name: chatMember.user.last_name})
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     // Добавляем пользователям их имена
     for (let i = 0; i < users.length; i++) {
-      let chatMember = await bot.getChatMember(users[i].chatId, users[i].userId)
+      try {
+        let chatMember = await bot.getChatMember(users[i].chatId, users[i].userId)
 
-      if (chatMember.user.last_name === undefined) {
-        users[i].title = `${users[i].length} см - ${chatMember.user.first_name}`;
-      } else {
-        users[i].title = `${users[i].length} см - ${chatMember.user.first_name} ${chatMember.user.last_name}`
+        if (chatMember.user.last_name === undefined) {
+          users[i].title = `${users[i].length} см - ${chatMember.user.first_name}`;
+        } else {
+          users[i].title = `${users[i].length} см - ${chatMember.user.first_name} ${chatMember.user.last_name}`
+        }
+      } catch (e) {
+        console.log(e);
+
+        if (users[i].last_name === undefined) {
+          users[i].title = users[i].first_name
+        } else {
+          users[i].title = `${users[i].first_name} ${users[i].last_name}`
+        }
       }
     }
 

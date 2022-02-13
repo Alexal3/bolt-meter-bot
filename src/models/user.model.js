@@ -21,6 +21,14 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true,
     default: true
+  },
+  first_name: {
+    type: String,
+    required: true
+  },
+  last_name: {
+    type: String,
+    required: false
   }
 })
 
